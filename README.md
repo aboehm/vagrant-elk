@@ -1,9 +1,8 @@
-# Vagrant environment for puppet 4 (debian based)
+# Vagrant environment for ELK 
 
 ## Overview
 
-A template for a Vagrant environment for puppet 4 based provisiong with debian
-based systems.
+A template for a Vagrant environment for ELK stack (debian based).
 
 ## Usage
 
@@ -12,58 +11,29 @@ based systems.
 The `Vagrantfile` contains following constants
 
 * `USE_GUI`: Headless or GUI mode. Default: headless. 
+* `VM_CPUS`: Number of virtual CPU cores. Default: 2.
+* `VM_IP`: Host-only-IP address. Leave empty to disable. Default: 172.16.1.2.
+* `VM_RAM`: RAM size in Megabytes. Default: 4096.
 * `VM_SYNC_TYPE`: Sychronisation method of folders. Default: rsync. (see
    https://www.vagrantup.com/docs/synced-folders/basic_usage.html)
 * `DEB_PROXY`: Url of a apt proxy. Empty if no proxy used (default).
 
-### Node definition
+### Running
 
-To create a node, go to the node declarations section and use the setup_node
-method. The following declaration will create a instance `example` based on the
-`debian/jessie64` box with two cpu cores, 4096 MB of RAM and one ethernet
-interface connected over NAT.
+To install and startup
 
-~~~
-# node declarations
-Vagrant.configure(2) do |config|
-  setup_node(config, "example", "debian/jessie64", 2, 4096, false, "")
-end
-~~~
+```
+git clone https://github.com/aboehm/vagrant-elk
+cd vagrant-elk
+vagrant plugin install vagrant-reload
+vagrant up
+```
 
-To add a host-only interface give the instance an ip adress e.g 10.0.0.2.
+After installation following services are available:
 
-~~~
-# node declarations
-Vagrant.configure(2) do |config|
-  setup_node(config, "example", "debian/jessie64", 2, 4096, false, "10.0.0.2")
-end
-~~~
-
-For more specialized environments (e.g. grub modification), that need a
-restart after provisioning, set `reload` to `true`.
-
-~~~
-# node declarations
-Vagrant.configure(2) do |config|
-  setup_node(config, "example", "debian/jessie64", 2, 4096, true, "")
-end
-~~~
-
-For multimachine setup, call `setup_node` multiple times.
-
-~~~
-# node declarations
-Vagrant.configure(2) do |config|
-  setup_node(config, "example1", "debian/jessie64", 2, 4096, false, "")
-  setup_node(config, "example2", "debian/jessie64", 2, 4096, false, "")
-end
-~~~
-
-### Puppet provision
-
-Any puppet related files are in `puppet` directory. Node configuration should
-be done in the `puppet/manifests/nodes.pp` manifest. Additional modules placed
-into `puppet/modules`. Hiera facts could be placed under `puppet/hieradata`.
+* `http://172.16.1.2:5601`: Kibana
+* `http://172.16.1.2:9200`: Elasticsearch
+* `172.16.1.2:10514`: Syslog (RFC3164/5424) logstash server with cee-support.
 
 ## License
 

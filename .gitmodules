@@ -4,3 +4,22 @@
 [submodule "puppet/modules/stdlib"]
 	path = puppet/modules/stdlib
 	url = https://github.com/puppetlabs/puppetlabs-stdlib
+[submodule "puppet/modules/elastic"]
+	path = puppet/modules/elastic
+	url = https://github.com/aboehm/puppet-elastic
+	branch = v2.4
+[submodule "puppet/modules/elasticsearch"]
+	path = puppet/modules/elasticsearch
+	url = https://github.com/aboehm/puppet-elasticsearch
+	branch = v2.4
+[submodule "puppet/modules/logstash"]
+	path = puppet/modules/logstash
+	url = https://github.com/aboehm/puppet-logstash
+	branch = v2.4
+[submodule "puppet/modules/kibana"]
+	path = puppet/modules/kibana
+	url = https://github.com/aboehm/puppet-kibana
+	branch = v4.6
+[submodule "puppet/modules/java"]
+	path = puppet/modules/java
+	url = https://github.com/puppetlabs/puppetlabs-java

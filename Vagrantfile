@@ -1,4 +1,4 @@
-# Vagrant virtualbox debian based environment with puppet 4 setup
+# Vagrant environment for ELK stack 
 # Copyright (C) 2016 Alexander Böhm <alxndr.boehm@gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,11 @@ USE_GUI      = false
 
 # filesystem synchronisation method
 VM_SYNC_TYPE = "rsync"
+
+# system attributes
+VM_CPUS       = 2
+VM_RAM        = 4096
+VM_IP         = "172.16.1.2"
 
 # optional debian proxy
 #DEB_PROXY    = "http://deb.proxy:3142"
@@ -65,7 +70,7 @@ def setup_node(vconfig, name, box, cpus, ram, reload, ip)
     SHELL
 
     if ip != ""
-      # No ip adress is given. Only NAT will be used
+      # No ip address is given. Only NAT will be used.
       config.vm.network "private_network", ip: ip
     end
 
@@ -97,7 +102,7 @@ end
 
 # node declarations
 Vagrant.configure(2) do |config|
-  # setup_node(config, "example", VM_BASE, CPUS, RAMSIZE, false, "")
+  setup_node(config, "elk.example.org", "debian/jessie64", VM_CPUS, VM_RAM, false, VM_IP)
 end
 
 # vi: set ft=ruby tabstop=2 shiftwidth=2 expandtab :
